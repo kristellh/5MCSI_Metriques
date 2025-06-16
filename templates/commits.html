@@ -15,7 +15,7 @@
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
-      fetch('/api/commits/minutes')
+      fetch('/extract-minutes/<date_string>')
         .then(response => response.json())
         .then(data => {
           let chartData = [['Minute', 'Commits']];
