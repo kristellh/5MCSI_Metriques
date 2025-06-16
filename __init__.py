@@ -46,7 +46,7 @@ def moncommits():
 
 @app.route('/api/commits/minutes')
 def commits_minute_distribution():
-    # API GitHub d'origine (à ne pas changer)
+    
     url = 'https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits?per_page=100'
     response = urlopen(url)
     raw_content = response.read()
