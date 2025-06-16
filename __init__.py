@@ -39,11 +39,32 @@ def monhistogramme():
 def moncommits():
      return render_template('commits.html')
 
-@app.route('/extract-minutes/<date_string>')
-def extract_minutes(date_string):
-        date_object = datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%SZ')
-        minutes = date_object.minute
-        return jsonify({'minutes': minutes})
+@app.route('/commits_data/')
+def commits_data():
+
+
+    response = urlopen(https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits)
+    raw_content = response.read()
+    json_content = json.loads(raw_content.decode('utf-8'))
+
+    minutes = []
+    for commit_element in json_content:
+        date_str = commit_element.get('commit', {}).get('author', {}).get('date')
+        if date_str:
+            dt = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%SZ')
+            minutes.append(dt.minute)
+
+    counter = Counter(minutes)
+
+    results = []
+    
+    for m in range(60):
+        results.append({
+            'Jour': m,             
+            'temp': counter.get(m, 0)  
+        })
+
+    return jsonify(results=results)
   
 
   
