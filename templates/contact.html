@@ -64,3 +64,22 @@
       <p>Prénom * </p>
       <p><input name="prenom" type="text" value=""/></p>
       
+<p>Laissez-moi votre commentaire :</p>
+      <textarea rows="6" cols="50" name="commentaire"></textarea>
+
+      <p><input type="submit" value="Envoyer" /></p>
+    </fieldset>
+  </form>
+
+  <div id="message" style="color: green; font-weight: bold; text-align: center; margin-top: 10px;"></div>
+
+  <script>
+    const form = document.querySelector('form');
+    const messageDiv = document.getElementById('message');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      messageDiv.textContent = "Merci, votre message a bien été envoyé !";
+      form.reset();
+    });
+  </script>
