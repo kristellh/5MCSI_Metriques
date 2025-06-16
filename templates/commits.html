@@ -16,27 +16,30 @@
 
     function drawChart() {
       fetch('/commits_data/')
-        .then(response => response.json())
-        .then(data => {
-          let chartData = [['Minute', 'Commits']];
-          data.forEach(item => {
-            chartData.push([item.minute.toString(), item.count]);
-          });
+  .then(response => response.json())
+  .then(data => {
+    let chartData = [['Minute', 'Commits']];
+    // Ici on boucle sur data.results, pas data directement
+    data.results.forEach(item => {
+      chartData.push([item.Jour.toString(), item.temp]); // Ou item.minute/item.count selon ta structure Flask
+    });
 
-          let dataTable = google.visualization.arrayToDataTable(chartData);
+    let dataTable = google.visualization.arrayToDataTable(chartData);
 
-          let options = {
-            title: 'Commits par minute',
-            hAxis: { title: 'Minute (0–59)' },
-            vAxis: { title: 'Nombre de Commits' },
-            legend: 'none',
-            colors: ['#1b9e77']
-          };
+    let options = {
+      title: 'Commits par minute',
+      hAxis: { title: 'Minute (0–59)' },
+      vAxis: { title: 'Nombre de Commits' },
+      legend: 'none',
+      colors: ['#1b9e77']
+    };
 
-          let chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-          chart.draw(dataTable, options);
-        });
+    let chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+    chart.draw(dataTable, options);
+  });
     }
   </script>
 </body>
 </html>
+
+
