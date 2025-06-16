@@ -1,33 +1,66 @@
-
 <html>
 <head>
+  <style>
+    body {
+      background-color: #f0f8ff; /* fond bleu clair */
+      font-family: Arial, sans-serif;
+      color: #333333;
+      padding: 20px;
+    }
 
+    h1 {
+      color: #2a52be; /* bleu vif pour le titre */
+      text-align: center;
+    }
 
+    p {
+      color: #555555;
+      font-size: 16px;
+    }
+
+    input[type="text"], textarea {
+      border: 2px solid #2a52be;
+      border-radius: 5px;
+      padding: 8px;
+      font-size: 14px;
+      width: 100%;
+      max-width: 400px;
+      box-sizing: border-box;
+      margin-bottom: 15px;
+    }
+
+    input[type="submit"] {
+      background-color: #2a52be;
+      color: white;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #1b3a8a;
+    }
+
+    fieldset {
+      border: 2px solid #2a52be;
+      border-radius: 10px;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+      background-color: #ffffff;
+    }
+  </style>
 </head>
 <body>
-	<h1>Formulaire de Contact</h1>
-<p> Les champs marqués d'une * sont obligatoires.</p>
-<form action="#">
-<fieldset>
-<p>Nom * </p>
-<p><input name="A" type="Text" value=""/></p>
-</br>
-  <p>Prénom * </p>
-<p><input name="A" type="Text" value=""/></p>
-</br>
-<p> Laissez-moi votre commentaire : </p>
-<textarea rows="30" cols="100	" name="H">
-
-</textarea>
-
-</br>
-
-<p><input type="submit" value="Envoyer" />
-
-</p>
-</fieldset>
-
-</form>
-
-</body>
-</html>
+  <h1>Formulaire de Contact</h1>
+  <p>Les champs marqués d'une * sont obligatoires.</p>
+  <form action="#">
+    <fieldset>
+      <p>Nom * </p>
+      <p><input name="nom" type="text" value=""/></p>
+      
+      <p>Prénom * </p>
+      <p><input name="prenom" type="text" value=""/></p>
+      
