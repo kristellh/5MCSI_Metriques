@@ -15,13 +15,12 @@
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
-      fetch('/api/commits/minutes')
+    fetch('/api/commits/minutes')
   .then(response => response.json())
   .then(data => {
     let chartData = [['Minute', 'Commits']];
-    // Ici on boucle sur data.results, pas data directement
-    data.results.forEach(item => {
-      chartData.push([item.Jour.toString(), item.temp]); // Ou item.minute/item.count selon ta structure Flask
+    data.forEach(item => {               // <-- pas data.results, mais data direct
+      chartData.push([item.minute.toString(), item.count]);  // <-- utiliser minute et count
     });
 
     let dataTable = google.visualization.arrayToDataTable(chartData);
