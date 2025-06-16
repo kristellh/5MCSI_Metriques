@@ -37,7 +37,7 @@ def monhistogramme():
   
 @app.route('/commits/')
 def commits_minute_distribution():
-    url = 'https://api.github.com/repos/5MCSI_Metriques/commits'
+    url = 'https://api.github.com/repos/kristellh/5MCSI_Metriques/commits'
     response = urlopen(url)
     raw_content = response.read()
     json_content = json.loads(raw_content.decode('utf-8'))
