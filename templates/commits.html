@@ -8,48 +8,35 @@
 <body>
   <h2>Histogramme des commits par minute</h2>
 
-   <div id="chart_div"></div>
-    <script>
-      google.charts.load('current', { packages: ['corechart'] });
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart(dataArray) {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Date');
-            data.addColumn('number', 'Nb de commit');
+  <div id="chart_div"></div>
 
-            dataArray.forEach(function (row) {
-                data.addRow(row);
-            });
+  <script>
+    google.charts.load('current', {packages: ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
 
-            var options = {
-                title: 'Nb commits/minute',
-                hAxis: { title: 'Date', slantedText: true, slantedTextAngle: 45 },
-                vAxis: { title: 'Nb de commit' },
-                legend: 'none'
-            };
+    function drawChart() {
+      fetch('/api/commits/minutes')
+        .then(response => response.json())
+        .then(data => {
+          let chartData = [['Minute', 'Commits']];
+          data.forEach(item => {
+            chartData.push([item.minute.toString(), item.count]);
+          });
 
-            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-            chart.draw(data, options);
-        }
+          let dataTable = google.visualization.arrayToDataTable(chartData);
 
-        async function loadCommitData() {
-            const response = await fetch('https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits');
-            const commits = await response.json();
-            const dataArray = [];
+          let options = {
+            title: 'Commits par minute',
+            hAxis: { title: 'Minute (0–59)' },
+            vAxis: { title: 'Nombre de Commits' },
+            legend: 'none',
+            colors: ['#1b9e77']
+          };
 
-            commits.forEach(commit => {
-                
-                const fullDate = commit.commit.author.date;
-              
-                const date = new Date(fullDate);
-                const dateString = date.toISOString();
-                
-                dataArray.push([dateString, 1]);
-            });
-
-            drawChart(dataArray);
-        }
-
+          let chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+          chart.draw(dataTable, options);
+        });
+    }
   </script>
 </body>
 </html>
