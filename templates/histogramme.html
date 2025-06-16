@@ -30,11 +30,12 @@
         var options = {
           title: 'Évolution des températures de la ville de Tawarano',
           legend: { position: 'none' },
+         colors: ['green'],
           hAxis: { title: 'Date' },
           vAxis: { title: 'Température (°C)' }
         };
 
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
     </script>
