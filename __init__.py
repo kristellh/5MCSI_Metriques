@@ -35,15 +35,27 @@ def mongraphique():
 def monhistogramme():
      return render_template('histogramme.html')
   
-@app.route('/extract-minutes/<date_string>')
-def extract_minutes(date_string):
-        date_object = datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%SZ')
-        minutes = date_object.minute
-        return jsonify({'minutes': minutes})
+@app.route('/commits/')
+def commits_minute_distribution():
+    url = 'https://api.github.com/repos/5MCSI_Metriques/commits'
+    response = urlopen(url)
+    raw_content = response.read()
+    json_content = json.loads(raw_content.decode('utf-8'))
 
-@app.route("/commits/")
-def commits_page():
-    return render_template('commits.html')
+    minutes = []
+
+    for commit in json_content:
+        date_str = commit.get('commit', {}).get('author', {}).get('date')
+        if date_str:
+            dt = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%SZ')
+            minutes.append(dt.minute)
+
+    counter = Counter(minutes)
+
+    results = [{'Jour': minute, 'temp': counter.get(minute, 0)} for minute in range(60)]
+
+    return jsonify(results=results)
+  
 
   
 if __name__ == "__main__":
