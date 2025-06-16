@@ -44,32 +44,25 @@ def monhistogramme():
 def moncommits():
      return render_template('commits.html')
 
-@app.route('/commits_data/')
-def commits_data():
-
-
-    response = urlopen(https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits)
+@app.route('/api/commits/minutes')
+def commits_minute_distribution():
+    # API GitHub d'origine (à ne pas changer)
+    url = 'https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits?per_page=100'
+    response = urlopen(url)
     raw_content = response.read()
-    json_content = json.loads(raw_content.decode('utf-8'))
+    commits = json.loads(raw_content.decode('utf-8'))
 
     minutes = []
-    for commit_element in json_content:
-        date_str = commit_element.get('commit', {}).get('author', {}).get('date')
+    for commit in commits:
+        date_str = commit.get('commit', {}).get('author', {}).get('date')
         if date_str:
             dt = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%SZ')
             minutes.append(dt.minute)
 
     counter = Counter(minutes)
+    results = [{'minute': m, 'count': counter.get(m, 0)} for m in range(60)]
 
-    results = []
-    
-    for m in range(60):
-        results.append({
-            'Jour': m,             
-            'temp': counter.get(m, 0)  
-        })
-
-    return jsonify(results=results)
+    return jsonify(results)
   
 
   
