@@ -63,6 +63,10 @@ def commits_data():
 
     return jsonify({'minutes': data})
 
+@app.route("/commits/")
+def commits_page():
+    return render_template('commits.html')
+
   
 if __name__ == "__main__":
   app.run(debug=True)
